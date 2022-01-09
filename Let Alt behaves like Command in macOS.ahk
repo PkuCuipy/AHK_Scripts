@@ -38,6 +38,9 @@ SetTitleMatchMode RegEx ; 这个似乎必须放在最顶上, 否则有问题, �
 !+t::
     Send ^T
     return
+!q::
+    Send !{F4}
+    return
 
 ; Alt + n 对浏览器进行特判, 
 ; 在浏览器中, Alt + n 应映射为 Ctrl + t (新建标签页), 而不是映射为 Ctrl + n (新建窗口)
@@ -91,9 +94,12 @@ SetTitleMatchMode RegEx ; 这个似乎必须放在最顶上, 否则有问题, �
     return
 
 ; 模拟 Command + Delete (删除光标左边内容)
+#IfWinNotActive, .*- Visual Studio Code$    ; VS Code 中表现不稳定, 直接在 VSC 中修改快捷键好了
 !BackSpace::
-    Send, {ShiftDown}}{Home}{ShiftUp}{Delete}
+    Send, {ShiftDown}}{Home}{ShiftUp}
+    Send, {BackSpace}
     return
+
 
 ; 模拟 Command + Space 进行 Spotlight 搜索
 #IfWinActive, ahk_exe SearchHost
@@ -104,3 +110,4 @@ SetTitleMatchMode RegEx ; 这个似乎必须放在最顶上, 否则有问题, �
 !Space::
     Send, #s
     return
+
