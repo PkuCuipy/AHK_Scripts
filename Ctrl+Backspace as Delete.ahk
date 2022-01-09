@@ -1,0 +1,3 @@
+^BackSpace::
+    Send, {Delete}
+    return
