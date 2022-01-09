@@ -1,6 +1,30 @@
 SetTitleMatchMode RegEx ; 这个似乎必须放在最顶上, 否则有问题, 没仔细研究原因
 
 
+
+; Alt + n 对浏览器进行特判: Alt + n 应映射为 Ctrl + t (新建标签页), 而不是映射为 Ctrl + n (新建窗口)
+#IfWinActive .*- Google Chrome$ 
+!n::
+    Send, ^t    ; 如果是大写的 T, 就相当于 ctrl + SHIFT + t
+    return
+#IfWinActive .*- Microsoft​ Edge$ 
+!n::
+    Send, ^t
+    return
+#IfWinActive
+
+
+; Chrome 中, 使用 Alt + 鼠标左键 在新标签页打开窗口
+#IfWinActive .*- Google Chrome$ 
+!LButton::
+    Send, {CtrlDown}
+    MouseClick, left, 0, 0, 1, 0, , R
+    Send, {CtrlUp}
+    return
+#IfWinActive
+
+
+
 ; 模拟 Command + 字母
 !w::
     Send, ^w
@@ -41,18 +65,6 @@ SetTitleMatchMode RegEx ; 这个似乎必须放在最顶上, 否则有问题, �
 !q::
     Send !{F4}
     return
-
-; Alt + n 对浏览器进行特判, 
-; 在浏览器中, Alt + n 应映射为 Ctrl + t (新建标签页), 而不是映射为 Ctrl + n (新建窗口)
-#IfWinActive .*- Google Chrome$ 
-!n::
-    Send, ^t    ; 如果是大写的 T, 就相当于 ctrl + SHIFT + t
-    return
-#IfWinActive .*- Microsoft​ Edge$ 
-!n::
-    Send, ^t    ; 如果是大写的 T, 就相当于 ctrl + SHIFT + t
-    return
-#IfWinActive
 !n::
     Send, ^n
     return
@@ -93,6 +105,7 @@ SetTitleMatchMode RegEx ; 这个似乎必须放在最顶上, 否则有问题, �
     Send, ^/
     return
 
+
 ; 模拟 Command + Delete (删除光标左边内容)
 #IfWinNotActive, .*- Visual Studio Code$    ; VS Code 中表现不稳定, 直接在 VSC 中修改快捷键好了
 !BackSpace::
@@ -110,4 +123,14 @@ SetTitleMatchMode RegEx ; 这个似乎必须放在最顶上, 否则有问题, �
 !Space::
     Send, #s
     return
+
+
+; 模拟 Command + Shift + 4 截屏
+!+4::
+    Send, #+s
+; 模拟 Command + Shift + 3 截屏
+!+3::
+    Send, {PrintScreen}
+
+
 
