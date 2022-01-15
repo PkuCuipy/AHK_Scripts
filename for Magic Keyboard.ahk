@@ -85,7 +85,7 @@ $#BackSpace::SendInput {Delete} ; ⌘ ⌫: 删除
 
 ; ; ⌘ 其它
 LWin::return
-$#LButton::                                  ; ⌘ 鼠标左键
+$#LButton::                                 ; ⌘ 左键
     Send, {CtrlDown}
     MouseClick, left, 0, 0, , , , R
     While (True) {
@@ -237,14 +237,21 @@ $#LButton::                                  ; ⌘ 鼠标左键
     
 
 #IfWinActive, ahk_exe SearchHost            ; ⌘ Space: 模拟 Spotlight 搜索
-    #Space::SendInput {Esc} 
-    #IfWinActive
-    #Space::SendInput {LWin}
+#Space::SendInput {Esc} 
+#IfWinActive
+#Space::SendInput {LWin}
 #/::SendInput ^/                            ; ⌘ /: 注释
 #,::SendInput ^,                            ; ⌘ ,: 设置
 #.::SendInput ^.                            ; ⌘ .:
 Lwin & Tab::AltTab                          ; ⌘ Tab: 切换窗口
 Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里实现得不好, 因为这个键还有同应用内切换的功能. 不过 win 上应该不能实现.)
+#=::SendInput ^{=}                          ; ⌘ =: 放大
+#+=::SendInput ^+{=}                        ; ⌘ +: 放大
+#-::SendInput ^{-}                          ; ⌘ -: 缩小
+#+-::SendInput ^+{-}                        ; ⌘ _: 缩小
+#WheelUp::SendInput ^+{=}                   ; 滚轮向上: 放大
+#WheelDown::SendInput ^{-}                  ; 滚轮向下: 缩小
+
 
 
 ; ⌘ ⇧ A-Z
