@@ -16,14 +16,30 @@ SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放�
 #n::Send ^t         ; Command + N 在浏览器应表现为新建标签页 (ctrl + T)
 #!c::Send ^!c       ; 模拟 Command + Shift + C 审查元素
 #!i::Send {F12}     ; 模拟 Command + Shift + I 打开开发者工具
-#LButton::          ; 模拟 Cmd + 鼠标左键 在新标签页打开窗口
-    Send {CtrlDown}
-    MouseClick, left, 0, 0, 1, 0, , R
-    Send {CtrlUp}
+; #LButton::          ; 模拟 Cmd + 鼠标左键 在新标签页打开窗口
+;     Send {CtrlDown}
+;     MouseClick, left, 0, 0, 1, 0, , R
+;     Send {CtrlUp}
 #IfWinActive
 ;============================================;
 ;                  特判结束                  
 ;============================================;
+
+; 方向键操作光标
+#Left::SendInput {Home}         ; ⌘ ←
+#Right::SendInput {End}         ; ⌘ →
+!Up::SendInput {PgUp}           ; ⌘ ↑
+!Down::SendInput {PgDn}         ; ⌘ ↓
+!Left::SendInput ^{Left}        ; ⌥ ←
+!Right::SendInput ^{Right}      ; ⌥ →
+!+Left::SendInput ^+{Left}      ; ⌥ ⇧ ←
+!+Right::SendInput ^+{Right}    ; ⌥ ⇧ →
+#+Left::SendInput +{Home}       ; ⌘ ⇧ ←
+#+Right::SendInput +{End}       ; ⌘ ⇧ →
+!+Up::SendInput +{PgUp}         ; ⌘ ⇧ ↑
+!+Down::SendInput +{PgDn}       ; ⌘ ⇧ ↓
+#BackSpace:: SendInput +{Home}{BackSpace}    ; ⌘ BackSpace: 删除光标左边全部内容
+!BackSpace:: SendInput +^{Left}{BackSpace}   ; ⌥ BackSpace: 删除光标左边一个词
 
 
 ; ⌘ A-Z
@@ -62,17 +78,167 @@ SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放�
 #4::SendInput ^{4} 
 #5::SendInput ^{5} 
 #6::SendInput ^{6} 
-#7::SendInput ^{7} 
+#7::SendInput ^{7}
 #8::SendInput ^{8} 
 #9::SendInput ^{9} 
 
-; ⌘ 其它
-LWin::Send {Blind}{vk07}                    ; 禁用 Windows 键的菜单弹出
-#BackSpace:: SendInput {Home}{BackSpace}    ; ⌘ BackSpace: 删除光标左边内容
-#IfWinActive, ahk_exe SearchHost            ; ⌘ Soace: 模拟 Spotlight 搜索
+; ; ⌘ 其它
+LWin::return
+$#LButton::                                  ; ⌘ 鼠标左键
+    Send, {CtrlDown}
+    MouseClick, left, 0, 0, , , , R
+    While (True) {
+        if (!getKeyState("LWin", "P")) {
+            break
+        }
+        if (getKeyState("1", "P")) {
+            SendInput ^{1} 
+            break 
+        }
+        if (getKeyState("2", "P")) {
+            SendInput ^{2} 
+            break 
+        }
+        if (getKeyState("3", "P")) {
+            SendInput ^{3} 
+            break 
+        }
+        if (getKeyState("4", "P")) {
+            SendInput ^{4} 
+            break 
+        }
+        if (getKeyState("5", "P")) {
+            SendInput ^{5} 
+            break 
+        }
+        if (getKeyState("6", "P")) {
+            SendInput ^{6}
+            break 
+        }
+        if (getKeyState("7", "P")) {
+            SendInput ^{7} 
+            break 
+        }
+        if (getKeyState("8", "P")) {
+            SendInput ^{8} 
+            break 
+        }
+        if (getKeyState("9", "P")) {
+            SendInput ^{9} 
+            break 
+        }
+        if (getKeyState("a", "P")) {
+            SendInput ^{a} 
+            break 
+        }
+        if (getKeyState("b", "P")) {
+            SendInput ^{b} 
+            break 
+        }
+        if (getKeyState("c", "P")) {
+            SendInput ^{c} 
+            break 
+        }
+        if (getKeyState("d", "P")) {
+            SendInput ^{d} 
+            break 
+        }
+        if (getKeyState("e", "P")) {
+            SendInput ^{e} 
+            break 
+        }
+        if (getKeyState("f", "P")) {
+            SendInput ^{f} 
+            break 
+        }
+        if (getKeyState("g", "P")) {
+            SendInput ^{g} 
+            break 
+        }
+        if (getKeyState("h", "P")) {
+            SendInput ^{h} 
+            break 
+        }
+        if (getKeyState("i", "P")) {
+            SendInput ^{i} 
+            break 
+        }
+        if (getKeyState("j", "P")) {
+            SendInput ^{j} 
+            break 
+        }
+        if (getKeyState("k", "P")) {
+            SendInput ^{k} 
+            break 
+        }
+        if (getKeyState("l", "P")) {
+            SendInput ^{l} 
+            break 
+        }
+        if (getKeyState("m", "P")) {
+            SendInput ^{m} 
+            break 
+        }
+        if (getKeyState("n", "P")) {
+            SendInput ^{n} 
+            break 
+        }
+        if (getKeyState("o", "P")) {
+            SendInput ^{o} 
+            break 
+        }
+        if (getKeyState("p", "P")) {
+            SendInput ^{p} 
+            break 
+        }
+        if (getKeyState("q", "P")) {
+            SendInput ^{q} 
+            break 
+        }
+        if (getKeyState("r", "P")) {
+            SendInput ^{r} 
+            break 
+        }
+        if (getKeyState("s", "P")) {
+            SendInput ^{s} 
+            break 
+        }
+        if (getKeyState("t", "P")) {
+            SendInput ^{t} 
+            break 
+        }
+        if (getKeyState("u", "P")) {
+            SendInput ^{u} 
+            break 
+        }
+        if (getKeyState("v", "P")) {
+            SendInput ^{v} 
+            break 
+        }
+        if (getKeyState("w", "P")) {
+            SendInput ^{w} 
+            break 
+        }
+        if (getKeyState("x", "P")) {
+            SendInput ^{x} 
+            break 
+        }
+        if (getKeyState("y", "P")) {
+            SendInput ^{y} 
+            break 
+        }
+        if (getKeyState("z", "P")) {
+            SendInput ^{z} 
+            break 
+        }
+    }
+    Send, {CtrlUp}      ; 为了解决松开 Win 键的时候会触发开始菜单的问题, 使用 Keywait, 利用 ctrl+Win 不会触发菜单的特性. 直到 Win 松开, 或者按下了别的快捷键, 才松开 Ctrl.
+    
+
+#IfWinActive, ahk_exe SearchHost            ; ⌘ Space: 模拟 Spotlight 搜索
     #Space::SendInput {Esc} 
     #IfWinActive
-    #Space::SendInput #s 
+    #Space::SendInput {LWin}
 #/::SendInput ^/                            ; ⌘ /: 注释
 #,::SendInput ^,                            ; ⌘ ,: 设置
 Lwin & Tab::AltTab                          ; ⌘ Tab: 切换窗口
@@ -88,7 +254,7 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 #+f::SendInput ^+{f} 
 #+g::SendInput ^+{g} 
 #+h::SendInput ^+{h} 
-#+i::SendInput ^+{i} 
+#+i::SendInput ^+{i}  
 #+j::SendInput ^+{j} 
 #+k::SendInput ^+{k} 
 #+l::SendInput ^+{l} 
@@ -118,19 +284,4 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 #+7::SendInput ^+{7} 
 #+8::SendInput ^+{8} 
 #+9::SendInput ^+{9} 
-
-
-; 方向键操作光标
-#Left::SendInput {Home}         ; ⌘ ←
-#Right::SendInput {End}         ; ⌘ →
-!Up::SendInput {PgUp}           ; ⌘ ↑
-!Down::SendInput {PgDn}         ; ⌘ ↓
-!Left::SendInput ^{Left}        ; ⌥ ←
-!Right::SendInput ^{Right}      ; ⌥ →
-!+Left::SendInput ^+{Left}      ; ⌥ ⇧ ←
-!+Right::SendInput ^+{Right}    ; ⌥ ⇧ →
-#+Left::SendInput +{Home}       ; ⌘ ⇧ ←
-#+Right::SendInput +{End}       ; ⌘ ⇧ →
-!+Up::SendInput +{PgUp}         ; ⌘ ⇧ ↑
-!+Down::SendInput +{PgDn}       ; ⌘ ⇧ ↓
 
