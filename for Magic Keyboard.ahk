@@ -3,6 +3,8 @@
 ;   ^ = CTRL
 ;   + = SHIFT
 ;   # = WIN  (COMMAND)
+; 
+;   ⌘ ⌥ ⌃ ⇧ ⌫ ⌦ ⏎ ⎋ ⇥ ⇪ ↑ ↓ ← → 
 ;=========================;
 
 SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放在最顶上才生效, 没仔细研究原因)
@@ -19,27 +21,26 @@ SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放�
 #IfWinActive, ahk_exe explorer.exe
 #+z::SendInput ^{y}             ; ⌘ ⇧ Z: 重做 (ctrl + Y)
 $#BackSpace::SendInput {Delete} ; ⌘ ⌫: 删除
-    
 #IfWinActive
 ;============================================;
 ;                  特判结束                  
 ;============================================;
 
 ; 方向键操作光标
-#Left::SendInput {Home}         ; ⌘ ←
-#Right::SendInput {End}         ; ⌘ →
-!Up::SendInput {PgUp}           ; ⌘ ↑
-!Down::SendInput {PgDn}         ; ⌘ ↓
-!Left::SendInput ^{Left}        ; ⌥ ←
-!Right::SendInput ^{Right}      ; ⌥ →
-!+Left::SendInput ^+{Left}      ; ⌥ ⇧ ←
-!+Right::SendInput ^+{Right}    ; ⌥ ⇧ →
-#+Left::SendInput +{Home}       ; ⌘ ⇧ ←
-#+Right::SendInput +{End}       ; ⌘ ⇧ →
-!+Up::SendInput +{PgUp}         ; ⌘ ⇧ ↑
-!+Down::SendInput +{PgDn}       ; ⌘ ⇧ ↓
-#BackSpace:: SendInput +{Home}{BackSpace}    ; ⌘ BackSpace: 删除光标左边全部内容
-!BackSpace:: SendInput +^{Left}{BackSpace}   ; ⌥ BackSpace: 删除光标左边一个词
+#Left::SendInput {Home}                     ; ⌘ ←
+#Right::SendInput {End}                     ; ⌘ →
+!Up::SendInput {PgUp}                       ; ⌘ ↑
+!Down::SendInput {PgDn}                     ; ⌘ ↓
+!Left::SendInput ^{Left}                    ; ⌥ ←
+!Right::SendInput ^{Right}                  ; ⌥ →
+!+Left::SendInput ^+{Left}                  ; ⌥ ⇧ ←
+!+Right::SendInput ^+{Right}                ; ⌥ ⇧ →
+#+Left::SendInput +{Home}                   ; ⌘ ⇧ ←
+#+Right::SendInput +{End}                   ; ⌘ ⇧ →
+!+Up::SendInput +{PgUp}                     ; ⌘ ⇧ ↑
+!+Down::SendInput +{PgDn}                   ; ⌘ ⇧ ↓
+#BackSpace:: SendInput +{Home}{BackSpace}   ; ⌘ BackSpace: 删除光标左边全部内容
+!BackSpace:: SendInput +^{Left}{BackSpace}  ; ⌥ BackSpace: 删除光标左边一个词
 
 
 ; ⌘ A-Z
@@ -278,7 +279,7 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 #+1::SendInput ^+{1} 
 #+2::SendInput ^+{2} 
 #+3::SendInput ^+{3} 
-#+4::SendInput Send {PrintScreen}     ; ⌘ ⇧ 4: 截屏
+#+4::SendInput {PrintScreen}     ; ⌘ ⇧ 4: 截屏
 #+5::SendInput ^+{5} 
 #+6::SendInput ^+{6} 
 #+7::SendInput ^+{7} 
