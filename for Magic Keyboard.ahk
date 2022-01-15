@@ -242,6 +242,7 @@ $#LButton::                                  ; ⌘ 鼠标左键
     #Space::SendInput {LWin}
 #/::SendInput ^/                            ; ⌘ /: 注释
 #,::SendInput ^,                            ; ⌘ ,: 设置
+#.::SendInput ^.                            ; ⌘ .:
 Lwin & Tab::AltTab                          ; ⌘ Tab: 切换窗口
 Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里实现得不好, 因为这个键还有同应用内切换的功能. 不过 win 上应该不能实现.)
 
@@ -285,4 +286,49 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 #+7::SendInput ^+{7} 
 #+8::SendInput ^+{8} 
 #+9::SendInput ^+{9} 
+
+
+; Capslock 作为超级键
+Capslock & a::return
+Capslock & b::return
+Capslock & c::return
+Capslock & d::#d                ; 返回桌面
+Capslock & e::return
+Capslock & f::return
+Capslock & g::return
+Capslock & h::return
+Capslock & i::return
+Capslock & j::return
+Capslock & k::return
+Capslock & l::return
+Capslock & m::return
+Capslock & n::return
+Capslock & o::return
+Capslock & p::return
+Capslock & q::return
+Capslock & r::#r                ; 运行
+Capslock & s::return
+Capslock & t::return
+Capslock & u::return
+Capslock & v::return
+Capslock & w::return
+Capslock & x::return
+Capslock & y::return
+Capslock & z::return
+Capslock & 0::return
+Capslock & 1::return
+Capslock & 2::return
+Capslock & 3::return
+Capslock & 4::return
+Capslock & 5::return
+Capslock & 6::return
+Capslock & 7::return
+Capslock & 8::return
+Capslock & 9::return
+CapsLock & -::^+!-              ; 亮度-- (配合 Monitorian)
+CapsLock & =::^+!=              ; 亮度++ (配合 Monitorian)
+CapsLock & F10::Volume_Mute     ; 静音
+CapsLock & F11::Volume_Down     ; 音量--
+CapsLock & F12::Volume_Up       ; 音量++
+
 
