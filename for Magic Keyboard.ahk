@@ -13,13 +13,13 @@ SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放�
 #IfWinActive .*- Microsoft​ Edge$ 
 #n::Send ^t
 #IfWinActive .*- Google Chrome$ 
-#n::Send ^t         ; Command + N 在浏览器应表现为新建标签页 (ctrl + T)
-#!c::Send ^!c       ; 模拟 Command + Shift + C 审查元素
-#!i::Send {F12}     ; 模拟 Command + Shift + I 打开开发者工具
-; #LButton::          ; 模拟 Cmd + 鼠标左键 在新标签页打开窗口
-;     Send {CtrlDown}
-;     MouseClick, left, 0, 0, 1, 0, , R
-;     Send {CtrlUp}
+#n::Send ^t                     ; ⌘ N: 新建标签页 (ctrl + T)
+#!c::Send ^!c                   ; ⌘ ⇧ C: 审查元素
+#!i::Send {F12}                 ; ⌘ ⇧ I: 开发者工具
+#IfWinActive, ahk_exe explorer.exe
+#+z::SendInput ^{y}             ; ⌘ ⇧ Z: 重做 (ctrl + Y)
+$#BackSpace::SendInput {Delete} ; ⌘ ⌫: 删除
+    
 #IfWinActive
 ;============================================;
 ;                  特判结束                  
