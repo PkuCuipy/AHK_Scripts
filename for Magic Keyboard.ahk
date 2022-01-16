@@ -15,12 +15,14 @@ SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放�
 #IfWinActive .*- Microsoft​ Edge$ 
 #n::Send ^t
 #IfWinActive .*- Google Chrome$ 
-#n::Send ^t                     ; ⌘ N: 新建标签页 (ctrl + T)
-#!c::Send ^!c                   ; ⌘ ⇧ C: 审查元素
-#!i::Send {F12}                 ; ⌘ ⇧ I: 开发者工具
+#n::Send ^t                             ; ⌘ N: 新建标签页 (ctrl + T)
+#!c::Send ^!c                           ; ⌘ ⇧ C: 审查元素
+#!i::Send {F12}                         ; ⌘ ⇧ I: 开发者工具
 #IfWinActive, ahk_exe explorer.exe
-#+z::SendInput ^{y}             ; ⌘ ⇧ Z: 重做 (ctrl + Y)
-$#BackSpace::SendInput {Delete} ; ⌘ ⌫: 删除
+#+z::SendInput ^{y}                     ; ⌘ ⇧ Z: 重做 (ctrl + Y)
+$#BackSpace::SendInput {Delete}         ; ⌘ ⌫: 删除
+#IfWinActive, ahk_exe webstorm64.exe
+$#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebStorm 自己处理
 #IfWinActive
 ;============================================;
 ;                  特判结束                  
@@ -44,10 +46,11 @@ $#BackSpace::SendInput {Delete} ; ⌘ ⌫: 删除
 
 
 ; ⌘ A-Z
+#UseHook, On
 #a::SendInput ^{a} 
 #b::SendInput ^{b} 
 #c::SendInput ^{c} 
-#d::SendInput ^{d} 
+#d::SendInput ^{d}
 #e::SendInput ^{e} 
 #f::SendInput ^{f} 
 #g::SendInput ^{g} 
@@ -70,6 +73,7 @@ $#BackSpace::SendInput {Delete} ; ⌘ ⌫: 删除
 #x::SendInput ^{x} 
 #y::SendInput ^{y} 
 #z::SendInput ^{z} 
+#UseHook, Off
 
 ; ⌘ 0-9
 #0::SendInput ^{0} 
@@ -83,7 +87,7 @@ $#BackSpace::SendInput {Delete} ; ⌘ ⌫: 删除
 #8::SendInput ^{8} 
 #9::SendInput ^{9} 
 
-; ; ⌘ 其它
+; ⌘ 其它
 LWin::return
 $#LButton::                                 ; ⌘ 左键
     Send, {CtrlDown}
@@ -294,12 +298,74 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 #+8::SendInput ^+{8} 
 #+9::SendInput ^+{9} 
 
+; ⌘ ⇧ 其它
+#+[::SendInput ^+{[} 
+#+]::SendInput ^+{]} 
+
+
+
+
+
+
+; ⌘ ⌥ A-Z
+#UseHook, On
+#!a::SendInput ^!{a} 
+#!b::SendInput ^!{b} 
+#!c::SendInput ^!{c} 
+#!d::SendInput ^!{d}
+#!e::SendInput ^!{e} 
+#!f::SendInput ^!{f} 
+#!g::SendInput ^!{g} 
+#!h::SendInput ^!{h} 
+#!i::SendInput ^!{i} 
+#!j::SendInput ^!{j} 
+#!k::SendInput ^!{k} 
+#!l::SendInput ^!{l} 
+#!m::SendInput ^!{m} 
+#!n::SendInput ^!{n} 
+#!o::SendInput ^!{o} 
+#!p::SendInput ^!{p} 
+#!q::SendInput ^!{q}
+#!r::SendInput ^!{r} 
+#!s::SendInput ^!{s} 
+#!t::SendInput ^!{t} 
+#!u::SendInput ^!{u} 
+#!v::SendInput ^!{v} 
+#!w::SendInput ^!{w} 
+#!x::SendInput ^!{x} 
+#!y::SendInput ^!{y} 
+#!z::SendInput ^!{z} 
+#UseHook, Off
+
+; ⌘ ⌥ 0-9
+#!0::SendInput ^!{0} 
+#!1::SendInput ^!{1}                 
+#!2::SendInput ^!{2} 
+#!3::SendInput ^!{3} 
+#!4::SendInput ^!{4} 
+#!5::SendInput ^!{5} 
+#!6::SendInput ^!{6} 
+#!7::SendInput ^!{7}
+#!8::SendInput ^!{8} 
+#!9::SendInput ^!{9} 
+
+; ⌘ ⌥ 其它   
+#!Up::Send {CtrlDown}{AltDown} {Up} {CtrlUp}{AltUp}             ; 配合 AquaSnap 实现类似 Magnet 的窗口管理
+#!Down::Send {CtrlDown}{AltDown} {Down} {CtrlUp}{AltUp}         ; 多发送几次, 因为 AquaSnap 并不一步到位 ..
+#!Left::Send {CtrlDown}{AltDown} {Left}{Left}{Left} {CtrlUp}{AltUp}     
+#!Right::Send {CtrlDown}{AltDown} {Right}{Right}{Right} {CtrlUp}{AltUp}
+#!Enter::Send ^!{Enter}
+  
+
+
+
+
 
 ; Capslock 作为超级键
 Capslock & a::return
 Capslock & b::return
 Capslock & c::return
-Capslock & d::#d                ; 返回桌面
+Capslock & d::Send #{d}               ; 返回桌面
 Capslock & e::return
 Capslock & f::return
 Capslock & g::return
@@ -339,3 +405,5 @@ CapsLock & F11::Volume_Down     ; 音量--
 CapsLock & F12::Volume_Up       ; 音量++
 
 
+; ⇧ Space
++Space::SendInput {Space}
