@@ -5,6 +5,8 @@
 ;   # = WIN  (COMMAND)
 ; 
 ;   ⌘ ⌥ ⌃ ⇧ ⌫ ⌦ ⏎ ⎋ ⇥ ⇪ ↑ ↓ ← → 
+;
+;   注: 需要在系统中禁用掉 Win 键的部分快捷键. (http://www.xitongzhijia.net/xtjc/20170112/90736.html)
 ;=========================;
 
 SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放在最顶上才生效, 没仔细研究原因)
@@ -45,6 +47,12 @@ $#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebSt
 !BackSpace:: SendInput +^{Left}{BackSpace}  ; ⌥ BackSpace: 删除光标左边一个词
 
 
+
+
+
+
+
+
 ; ⌘ A-Z
 #UseHook, On
 #a::SendInput ^{a} 
@@ -78,7 +86,7 @@ $#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebSt
 ; ⌘ 0-9
 #0::SendInput ^{0} 
 #1::SendInput ^{1} 
-#2::SendInput ^{2} 
+#2::SendInput ^{2}
 #3::SendInput ^{3} 
 #4::SendInput ^{4} 
 #5::SendInput ^{5} 
@@ -88,7 +96,8 @@ $#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebSt
 #9::SendInput ^{9} 
 
 ; ⌘ 其它
-LWin::return
+; ⌘ 
+LWin::return  ; 本来想模拟按住 Ctrl, 但好像做不到...
 $#LButton::                                 ; ⌘ 左键
     Send, {CtrlDown}
     MouseClick, left, 0, 0, , , , R
@@ -240,10 +249,12 @@ $#LButton::                                 ; ⌘ 左键
     Send, {CtrlUp}      ; 为了解决松开 Win 键的时候会触发开始菜单的问题, 使用 Keywait, 利用 ctrl+Win 不会触发菜单的特性. 直到 Win 松开, 或者按下了别的快捷键, 才松开 Ctrl.
     
 
-#IfWinActive, ahk_exe SearchHost            ; ⌘ Space: 模拟 Spotlight 搜索
-#Space::SendInput {Esc} 
-#IfWinActive
-#Space::SendInput {LWin}
+; #IfWinActive, ahk_exe SearchHost            ; ⌘ Space: 模拟 Spotlight 搜索
+; #Space::SendInput {Esc} 
+; #IfWinActive
+; #Space::SendInput {LWin}
+
+#Space::SendInput !{Space}                  ; Wox 的默认快捷键
 #/::SendInput ^/                            ; ⌘ /: 注释
 #,::SendInput ^,                            ; ⌘ ,: 设置
 #.::SendInput ^.                            ; ⌘ .:
@@ -308,7 +319,6 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 
 
 ; ⌘ ⌥ A-Z
-#UseHook, On
 #!a::SendInput ^!{a} 
 #!b::SendInput ^!{b} 
 #!c::SendInput ^!{c} 
@@ -335,7 +345,6 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 #!x::SendInput ^!{x} 
 #!y::SendInput ^!{y} 
 #!z::SendInput ^!{z} 
-#UseHook, Off
 
 ; ⌘ ⌥ 0-9
 #!0::SendInput ^!{0} 
@@ -355,7 +364,9 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 #!Left::Send {CtrlDown}{AltDown} {Left}{Left}{Left} {CtrlUp}{AltUp}     
 #!Right::Send {CtrlDown}{AltDown} {Right}{Right}{Right} {CtrlUp}{AltUp}
 #!Enter::Send ^!{Enter}
-  
+#![::^![                    ; ⌘ ⌥ [
+#!]::^!]                    ; ⌘ ⌥ ]
+    
 
 
 
