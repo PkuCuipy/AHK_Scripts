@@ -96,8 +96,8 @@ $#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebSt
 #9::SendInput ^{9} 
 
 ; ⌘ 其它
-; ⌘ 
-LWin::return  ; 本来想模拟按住 Ctrl, 但好像做不到...
+ 
+LWin::return                                ; ⌘ (本来想模拟按住 Ctrl, 但好像做不到...)
 $#LButton::                                 ; ⌘ 左键
     Send, {CtrlDown}
     MouseClick, left, 0, 0, , , , R
@@ -106,7 +106,7 @@ $#LButton::                                 ; ⌘ 左键
             break
         }
         if (getKeyState("1", "P")) {
-            SendInput ^{1} 
+            SendInput ^{1}
             break 
         }
         if (getKeyState("2", "P")) {
@@ -247,12 +247,7 @@ $#LButton::                                 ; ⌘ 左键
         }
     }
     Send, {CtrlUp}      ; 为了解决松开 Win 键的时候会触发开始菜单的问题, 使用 Keywait, 利用 ctrl+Win 不会触发菜单的特性. 直到 Win 松开, 或者按下了别的快捷键, 才松开 Ctrl.
-    
-
-; #IfWinActive, ahk_exe SearchHost            ; ⌘ Space: 模拟 Spotlight 搜索
-; #Space::SendInput {Esc} 
-; #IfWinActive
-; #Space::SendInput {LWin}
+    return              ; 这个 return 非常重要, 否则会触发下面的 !Space. 远离暂时未知 (事实上就是我不知道 return 是干啥的, 以及脚本的执行原理)
 
 #Space::SendInput !{Space}                  ; Wox 的默认快捷键
 #/::SendInput ^/                            ; ⌘ /: 注释
