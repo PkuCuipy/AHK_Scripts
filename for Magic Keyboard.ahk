@@ -413,3 +413,12 @@ CapsLock & F12::Volume_Up       ; 音量++
 
 ; ⇧ Space
 +Space::SendInput {Space}
+
+
+
+; 基于 ⌥ 的快捷输入
+!\::SendInput 、
+
+; 基于 ⌥⇧ 的快捷输入
+!+[:: SendInput ｢
+!+]:: SendInput ｣
