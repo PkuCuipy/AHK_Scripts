@@ -15,11 +15,12 @@ SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放�
 ;          特殊情况的特判请放在这里         
 ;===========================================;
 #IfWinActive .*- Microsoft​ Edge$ 
-#n::Send ^t
+#n::SendInput ^t
 #IfWinActive .*- Google Chrome$ 
-#n::Send ^t                             ; ⌘ N: 新建标签页 (ctrl + T)
-#!c::Send ^!c                           ; ⌘ ⇧ C: 审查元素
-#!i::Send {F12}                         ; ⌘ ⇧ I: 开发者工具
+#n::SendInput ^t                             ; ⌘ N: 新建标签页 (ctrl + T)
+#!c::SendInput ^!c                           ; ⌘ ⇧ C: 审查元素
+#!i::SendInput {F12}                         ; ⌘ ⇧ I: 开发者工具
+#!f::SendInput ^e                       ; ⌘ ⌥ F: 激活地址栏
 #IfWinActive, ahk_exe explorer.exe
 #+z::SendInput ^{y}                     ; ⌘ ⇧ Z: 重做 (ctrl + Y)
 $#BackSpace::SendInput {Delete}         ; ⌘ ⌫: 删除
