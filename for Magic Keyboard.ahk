@@ -1,4 +1,4 @@
-;=========================;
+;===========================================;
 ;   ! = ALT  (OPTION)
 ;   ^ = CTRL
 ;   + = SHIFT
@@ -7,13 +7,13 @@
 ;   ⌘ ⌥ ⌃ ⇧ ⌫ ⌦ ⏎ ⎋ ⇥ ⇪ ↑ ↓ ← → 
 ;
 ;   注: 需要在系统中禁用掉 Win 键的部分快捷键. (http://www.xitongzhijia.net/xtjc/20170112/90736.html)
-;=========================;
+;===========================================;
 
 SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放在最顶上才生效, 没仔细研究原因)
 
-;============================================;
-;            特殊情况的特判请放在这里         
-;============================================;
+;===========================================;
+;          特殊情况的特判请放在这里         
+;===========================================;
 #IfWinActive .*- Microsoft​ Edge$ 
 #n::Send ^t
 #IfWinActive .*- Google Chrome$ 
@@ -26,11 +26,16 @@ $#BackSpace::SendInput {Delete}         ; ⌘ ⌫: 删除
 #IfWinActive, ahk_exe webstorm64.exe
 $#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebStorm 自己处理
 #IfWinActive
-;============================================;
-;                  特判结束                  
-;============================================;
+;===========================================;
+;                 特判结束                  
+;===========================================;
 
-; 方向键操作光标
+
+
+
+;===========================================;
+;               方向键操作光标 
+;===========================================;
 #Left::SendInput {Home}                     ; ⌘ ←
 #Right::SendInput {End}                     ; ⌘ →
 !Up::SendInput {PgUp}                       ; ⌘ ↑
@@ -48,11 +53,9 @@ $#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebSt
 
 
 
-
-
-
-
-
+;===========================================;
+;                    ⌘
+;===========================================;
 ; ⌘ A-Z
 #UseHook, On
 #a::SendInput ^{a} 
@@ -96,16 +99,16 @@ $#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebSt
 #9::SendInput ^{9} 
 
 ; ⌘ 其它
- 
 LWin::return                                ; ⌘ (本来想模拟按住 Ctrl, 但好像做不到...)
-$#LButton::                                 ; ⌘ 左键
+
+$#LButton::                               ; ⌘ 左键
     Send, {CtrlDown}
     MouseClick, left, 0, 0, , , , R
     While (True) {
         if (!getKeyState("LWin", "P")) {
             break
         }
-        if (getKeyState("1", "P")) {
+        if (getKeyState(1, "P")) {
             SendInput ^{1}
             break 
         }
@@ -141,115 +144,16 @@ $#LButton::                                 ; ⌘ 左键
             SendInput ^{9} 
             break 
         }
-        if (getKeyState("a", "P")) {
-            SendInput ^{a} 
-            break 
-        }
-        if (getKeyState("b", "P")) {
-            SendInput ^{b} 
-            break 
-        }
-        if (getKeyState("c", "P")) {
-            SendInput ^{c} 
-            break 
-        }
-        if (getKeyState("d", "P")) {
-            SendInput ^{d} 
-            break 
-        }
-        if (getKeyState("e", "P")) {
-            SendInput ^{e} 
-            break 
-        }
-        if (getKeyState("f", "P")) {
-            SendInput ^{f} 
-            break 
-        }
-        if (getKeyState("g", "P")) {
-            SendInput ^{g} 
-            break 
-        }
-        if (getKeyState("h", "P")) {
-            SendInput ^{h} 
-            break 
-        }
-        if (getKeyState("i", "P")) {
-            SendInput ^{i} 
-            break 
-        }
-        if (getKeyState("j", "P")) {
-            SendInput ^{j} 
-            break 
-        }
-        if (getKeyState("k", "P")) {
-            SendInput ^{k} 
-            break 
-        }
-        if (getKeyState("l", "P")) {
-            SendInput ^{l} 
-            break 
-        }
-        if (getKeyState("m", "P")) {
-            SendInput ^{m} 
-            break 
-        }
-        if (getKeyState("n", "P")) {
-            SendInput ^{n} 
-            break 
-        }
-        if (getKeyState("o", "P")) {
-            SendInput ^{o} 
-            break 
-        }
-        if (getKeyState("p", "P")) {
-            SendInput ^{p} 
-            break 
-        }
-        if (getKeyState("q", "P")) {
-            SendInput ^{q} 
-            break 
-        }
-        if (getKeyState("r", "P")) {
-            SendInput ^{r} 
-            break 
-        }
-        if (getKeyState("s", "P")) {
-            SendInput ^{s} 
-            break 
-        }
-        if (getKeyState("t", "P")) {
-            SendInput ^{t} 
-            break 
-        }
-        if (getKeyState("u", "P")) {
-            SendInput ^{u} 
-            break 
-        }
-        if (getKeyState("v", "P")) {
-            SendInput ^{v} 
-            break 
-        }
-        if (getKeyState("w", "P")) {
+        if (getKeyState("W", "P")) {
             SendInput ^{w} 
-            break 
-        }
-        if (getKeyState("x", "P")) {
-            SendInput ^{x} 
-            break 
-        }
-        if (getKeyState("y", "P")) {
-            SendInput ^{y} 
-            break 
-        }
-        if (getKeyState("z", "P")) {
-            SendInput ^{z} 
             break 
         }
     }
     Send, {CtrlUp}      ; 为了解决松开 Win 键的时候会触发开始菜单的问题, 使用 Keywait, 利用 ctrl+Win 不会触发菜单的特性. 直到 Win 松开, 或者按下了别的快捷键, 才松开 Ctrl.
+    ; 这里需要指出, 上述的一堆判断仅对 Cmd+左键 后按下的第一组快捷键奏效, 之后的快捷键就是走的正常 ahk 映射. 因为特性是: 按过 Cmd+XXX 之后, 再弹起 Cmd 时就不会触发 Windows菜单.
     return              ; 这个 return 非常重要, 否则会触发下面的 !Space. 远离暂时未知 (事实上就是我不知道 return 是干啥的, 以及脚本的执行原理)
 
-#Space::SendInput !{Space}                  ; Wox 的默认快捷键
+#Space::SendInput !{Space}                  ; ⌘ Space: 触发 Alt+Space (Wox 的默认快捷键)
 #/::SendInput ^/                            ; ⌘ /: 注释
 #,::SendInput ^,                            ; ⌘ ,: 设置
 #.::SendInput ^.                            ; ⌘ .:
@@ -261,6 +165,7 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 #+-::SendInput ^+{-}                        ; ⌘ _: 缩小
 #WheelUp::SendInput ^+{=}                   ; 滚轮向上: 放大
 #WheelDown::SendInput ^{-}                  ; 滚轮向下: 缩小
+#Enter::SendInput ^{Enter}                  ; ⌘ ⏎: 比如 Typora 的表格新行
 
 
 
@@ -307,9 +212,6 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 ; ⌘ ⇧ 其它
 #+[::SendInput ^+{[} 
 #+]::SendInput ^+{]} 
-
-
-
 
 
 
@@ -365,8 +267,6 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 
 
 
-
-
 ; Capslock 作为超级键
 Capslock & a::return
 Capslock & b::return
@@ -409,12 +309,11 @@ CapsLock & =::^+!=              ; 亮度++ (配合 Monitorian)
 CapsLock & F10::Volume_Mute     ; 静音
 CapsLock & F11::Volume_Down     ; 音量--
 CapsLock & F12::Volume_Up       ; 音量++
+CapsLock & Tab::#Tab            ; 切换桌面
 
 
 ; ⇧ Space
 +Space::SendInput {Space}
-
-
 
 ; 基于 ⌥ 的快捷输入
 !\::SendInput 、
