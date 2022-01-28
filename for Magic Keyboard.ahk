@@ -15,12 +15,15 @@ SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放�
 ;          特殊情况的特判请放在这里         
 ;===========================================;
 #IfWinActive .*- Microsoft​ Edge$ 
-#n::SendInput ^t
+#n::SendInput ^{t}
 #IfWinActive .*- Google Chrome$ 
-#n::SendInput ^t                             ; ⌘ N: 新建标签页 (ctrl + T)
-#!c::SendInput ^!c                           ; ⌘ ⇧ C: 审查元素
-#!i::SendInput {F12}                         ; ⌘ ⇧ I: 开发者工具
-#!f::SendInput ^e                       ; ⌘ ⌥ F: 激活地址栏
+#n::SendInput ^{t}                      ; ⌘ N: 新建标签页 (ctrl + T)
+#!c::SendInput ^!{c}                    ; ⌘ ⇧ C: 审查元素
+#!i::SendInput {F12}                    ; ⌘ ⇧ I: 开发者工具
+#!f::SendInput ^{l}                     ; ⌘ ⌥ F: 跳到地址栏
+#+[::SendInput ^+{Tab}                  ; ⌘ ⇧ [: 跳到左邻标签页
+#+]::SendInput ^{Tab}                   ; ⌘ ⇧ ]: 跳到右邻标签页
+#y::SendInput ^{h}                      ; ⌘ Y: 显示历史记录
 #IfWinActive, ahk_exe explorer.exe
 #+z::SendInput ^{y}                     ; ⌘ ⇧ Z: 重做 (ctrl + Y)
 $#BackSpace::SendInput {Delete}         ; ⌘ ⌫: 删除
@@ -57,13 +60,15 @@ $#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebSt
 ;===========================================;
 ;                    ⌘
 ;===========================================;
+; 这一段都用 Hook 是因为: 比如我想用 Capslock+D 显示桌面, 那我会写成 Send #{d},
+; 如果这里不用 Hook, 就会导致实际发送的是重载后的 ^d. 参见 https://www.autoahk.com/archives/11773
 ; ⌘ A-Z
-#UseHook, On
+#UseHook, On                
 #a::SendInput ^{a} 
 #b::SendInput ^{b} 
 #c::SendInput ^{c} 
 #d::SendInput ^{d}
-#e::SendInput ^{e} 
+#e::SendInput ^{e}
 #f::SendInput ^{f} 
 #g::SendInput ^{g} 
 #h::SendInput ^{h} 
@@ -75,7 +80,7 @@ $#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebSt
 #n::SendInput ^{n} 
 #o::SendInput ^{o} 
 #p::SendInput ^{p} 
-#q::Send !{F4}         ; ⌘ Q: 关闭窗口
+#q::SendInput !{F4}         ; ⌘ Q: 关闭窗口
 #r::SendInput ^{r} 
 #s::SendInput ^{s} 
 #t::SendInput ^{t} 
@@ -154,7 +159,13 @@ $#LButton::                               ; ⌘ 左键
     ; 这里需要指出, 上述的一堆判断仅对 Cmd+左键 后按下的第一组快捷键奏效, 之后的快捷键就是走的正常 ahk 映射. 因为特性是: 按过 Cmd+XXX 之后, 再弹起 Cmd 时就不会触发 Windows菜单.
     return              ; 这个 return 非常重要, 否则会触发下面的 !Space. 远离暂时未知 (事实上就是我不知道 return 是干啥的, 以及脚本的执行原理)
 
-#Space::SendInput !{Space}                  ; ⌘ Space: 触发 Alt+Space (Wox 的默认快捷键)
+
+; ⌘ Space: 模拟 Spotlight 搜索
+#IfWinActive, ahk_exe SearchHost 
+#Space::SendInput {Esc} 
+#IfWinActive
+#Space::SendInput {LWin}                    
+
 #/::SendInput ^/                            ; ⌘ /: 注释
 #,::SendInput ^,                            ; ⌘ ,: 设置
 #.::SendInput ^.                            ; ⌘ .:
@@ -257,22 +268,21 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 #!9::SendInput ^!{9} 
 
 ; ⌘ ⌥ 其它   
-#!Up::Send {CtrlDown}{AltDown} {Up} {CtrlUp}{AltUp}             ; 配合 AquaSnap 实现类似 Magnet 的窗口管理
-#!Down::Send {CtrlDown}{AltDown} {Down} {CtrlUp}{AltUp}         ; 多发送几次, 因为 AquaSnap 并不一步到位 ..
-#!Left::Send {CtrlDown}{AltDown} {Left}{Left}{Left} {CtrlUp}{AltUp}     
-#!Right::Send {CtrlDown}{AltDown} {Right}{Right}{Right} {CtrlUp}{AltUp}
-#!Enter::Send ^!{Enter}
-#![::^![                    ; ⌘ ⌥ [
-#!]::^!]                    ; ⌘ ⌥ ]
-    
-
+#!Enter::SendInput ^!{Enter}                                                    ; 配合 AquaSnap
+#!Left::SendInput {CtrlDown}{AltDown} {Left}{Left}{Left} {CtrlUp}{AltUp}        ; 实现类似 Magnet 的窗口管理.
+#!Right::SendInput {CtrlDown}{AltDown} {Right}{Right}{Right} {CtrlUp}{AltUp}    ; 这里多发送几次, 
+#!Up::SendInput {CtrlDown}{AltDown} {Up} {CtrlUp}{AltUp}                        ; 是因为 AquaSnap
+#!Down::SendInput {CtrlDown}{AltDown} {Down} {CtrlUp}{AltUp}                    ; 并不像 Magnet 那样一步到位..
+#![::^![                                                                        ; ⌘ ⌥ [
+#!]::^!]                                                                        ; ⌘ ⌥ ]
+$#!Space::SendInput #!{Space}                                                   ; ⌘ ⌥ Space: 打开 / 关闭 Everything.app  (这个快捷键直接在 Everything 里设置即可, 这里仅用于占位)
 
 
 ; Capslock 作为超级键
 Capslock & a::return
 Capslock & b::return
 Capslock & c::return
-Capslock & d::Send #{d}               ; 返回桌面
+Capslock & d::#d                ; 返回桌面 (不知道为啥失效了...)
 Capslock & e::return
 Capslock & f::return
 Capslock & g::return
@@ -286,7 +296,7 @@ Capslock & n::return
 Capslock & o::return
 Capslock & p::return
 Capslock & q::return
-Capslock & r::#r                ; 运行
+Capslock & r::return
 Capslock & s::return
 Capslock & t::return
 Capslock & u::return
