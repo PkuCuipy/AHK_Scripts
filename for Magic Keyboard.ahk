@@ -104,10 +104,8 @@ $#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebSt
 #8::SendInput ^{8} 
 #9::SendInput ^{9} 
 
-; ⌘ 其它
-LWin::return                                ; ⌘ (本来想模拟按住 Ctrl, 但好像做不到...)
-
-$#LButton::                               ; ⌘ 左键
+; ⌘ 左键
+$#LButton::                                 
     Send, {CtrlDown}
     MouseClick, left, 0, 0, , , , R
     While (True) {
@@ -154,18 +152,22 @@ $#LButton::                               ; ⌘ 左键
             SendInput ^{w} 
             break 
         }
+        if (getKeyState("S", "P")) {
+            SendInput ^{s} 
+            break 
+        }
     }
     Send, {CtrlUp}      ; 为了解决松开 Win 键的时候会触发开始菜单的问题, 使用 Keywait, 利用 ctrl+Win 不会触发菜单的特性. 直到 Win 松开, 或者按下了别的快捷键, 才松开 Ctrl.
     ; 这里需要指出, 上述的一堆判断仅对 Cmd+左键 后按下的第一组快捷键奏效, 之后的快捷键就是走的正常 ahk 映射. 因为特性是: 按过 Cmd+XXX 之后, 再弹起 Cmd 时就不会触发 Windows菜单.
     return              ; 这个 return 非常重要, 否则会触发下面的 !Space. 远离暂时未知 (事实上就是我不知道 return 是干啥的, 以及脚本的执行原理)
 
 
-; ⌘ Space: 模拟 Spotlight 搜索
+; ⌘ 其它
+LWin::return                                ; ⌘ (本来想模拟按住 Ctrl, 但好像做不到...)
 #IfWinActive, ahk_exe SearchHost 
 #Space::SendInput {Esc} 
 #IfWinActive
-#Space::SendInput {LWin}                    
-
+#Space::SendInput {LWin}                    ; ⌘ Space: 模拟 Spotlight 搜索
 #/::SendInput ^/                            ; ⌘ /: 注释
 #,::SendInput ^,                            ; ⌘ ,: 设置
 #.::SendInput ^.                            ; ⌘ .:
@@ -181,6 +183,9 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 
 
 
+;===========================================;
+;                   ⌘ ⇧
+;===========================================;
 ; ⌘ ⇧ A-Z
 #+a::SendInput ^+{a} 
 #+b::SendInput ^+{b} 
@@ -227,6 +232,9 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 
 
 
+;===========================================;
+;                   ⌘ ⌥
+;===========================================;
 ; ⌘ ⌥ A-Z
 #!a::SendInput ^!{a} 
 #!b::SendInput ^!{b} 
@@ -278,11 +286,60 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 $#!Space::SendInput #!{Space}                                                   ; ⌘ ⌥ Space: 打开 / 关闭 Everything.app  (这个快捷键直接在 Everything 里设置即可, 这里仅用于占位)
 
 
-; Capslock 作为超级键
+
+;===========================================;
+;                   ⌘ ⌃
+;===========================================;
+; ⌘ ⌃ A-Z
+#^a::return 
+#^b::return 
+#^c::return 
+#^d::return
+#^e::return 
+#^f::return 
+#^g::return 
+#^h::return 
+#^i::return 
+#^j::return 
+#^k::return 
+#^l::return 
+#^m::return 
+#^n::return 
+#^o::return 
+#^p::return 
+#^q::return
+#^r::return 
+#^s::return 
+#^t::return 
+#^u::return 
+#^v::return 
+#^w::return 
+#^x::return 
+#^y::return 
+#^z::return 
+
+; ⌘ ⌃ 0-9
+#^0::return 
+#^1::return                 
+#^2::return 
+#^3::return 
+#^4::return 
+#^5::return 
+#^6::return 
+#^7::return
+#^8::return 
+#^9::return 
+
+; ⌘ ⌃ 其它   
+
+
+;===========================================;
+;                  Capslock
+;===========================================;
 Capslock & a::return
 Capslock & b::return
 Capslock & c::return
-Capslock & d::#d                ; 返回桌面 (不知道为啥失效了...)
+Capslock & d::Send #{d}               ; 返回桌面 (不知道为啥失效了...)
 Capslock & e::return
 Capslock & f::return
 Capslock & g::return
@@ -323,14 +380,106 @@ CapsLock & F12::Volume_Up       ; 音量++
 CapsLock & Tab::#Tab            ; 切换桌面
 
 
+;===========================================;
+;                   Miscs.
+;===========================================;
 ; ⇧ Space
 +Space::SendInput {Space}
 
-; 基于 ⌥ 的快捷输入
-!\::SendInput 、
-!-:: SendInput –
 
-; 基于 ⌥⇧ 的快捷输入
-!+[:: SendInput ｢
-!+]:: SendInput ｣
-!+-:: SendInput —
+
+;===========================================;
+;          基于 ⌥ [⇧] 的快捷输入
+;===========================================;
+!a::SendInput α
+!b::SendInput β
+!c::SendInput χ
+!d::SendInput δ
+!e::SendInput η
+!f::SendInput φ
+!g::SendInput γ
+!h::SendInput ˙
+!i::SendInput ∈
+!j::SendInput ∆
+!k::SendInput ˚
+!l::SendInput λ
+!m::SendInput μ
+!n::SendInput ν
+!o::SendInput ω
+!p::SendInput π
+!q::SendInput œ
+!r::SendInput ρ
+!s::SendInput σ
+!t::SendInput θ
+!u::SendInput ∪
+!v::SendInput √
+!w::SendInput ψ
+!x::SendInput ξ
+!y::SendInput ¥
+!z::SendInput ζ
+
+!+a::SendInput A
+!+b::SendInput ı
+!+c::SendInput Ç
+!+d::SendInput Δ
+!+e::SendInput ∃
+!+f::SendInput ∀
+!+g::SendInput Γ
+!+h::SendInput Ó
+!+i::SendInput ∫
+!+j::SendInput Ô
+!+k::SendInput 
+!+l::SendInput Λ
+!+m::SendInput Â
+!+n::SendInput ˜
+!+o::SendInput Ω
+!+p::SendInput Π
+!+q::SendInput Œ
+!+r::SendInput ‰
+!+s::SendInput Σ
+!+t::SendInput Θ
+!+u::SendInput ∩
+!+v::SendInput ◊
+!+w::SendInput ∑
+!+x::SendInput ≈
+!+y::SendInput Á
+!+z::SendInput ¸
+
+!0::SendInput ∅
+!2::SendInput ²
+!3::SendInput ε
+!5::SendInput ∞
+!6::SendInput ∂
+!8::SendInput •
+
+!+8::SendInput ×
+
+!\::SendInput 、
+!-::SendInput –
+!+[::SendInput ｢
+!+]::SendInput ｣
+!+-::SendInput —
+!=::SendInput ≠
+!+=::SendInput ±
+!,::SendInput ≤
+!.::SendInput ≥
+!+,::SendInput 《
+!+.::SendInput 》
+!/::SendInput ÷
+![::SendInput 【
+!]::SendInput 】
+
+
+;===========================================;
+;                短语展开
+;===========================================;
+; 日期展开
+::\cd::
+    FormatTime, TimeString, , yyyy-MM-dd
+    SendInput, %TimeString%
+    return
+::\ct::
+    FormatTime, TimeString, , yyyy-MM-dd(HH.mm.ss)
+    SendInput, %TimeString%
+    return
+
