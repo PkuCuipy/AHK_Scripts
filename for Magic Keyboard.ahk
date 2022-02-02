@@ -26,9 +26,18 @@ SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放�
 #y::SendInput ^{h}                      ; ⌘ Y: 显示历史记录
 #IfWinActive, ahk_exe explorer.exe
 #+z::SendInput ^{y}                     ; ⌘ ⇧ Z: 重做 (ctrl + Y)
-$#BackSpace::SendInput {Delete}         ; ⌘ ⌫: 删除
+#BackSpace::SendInput {Delete}          ; ⌘ ⌫: 删除
+#i::SendInput !{Enter}                  ; ⌘ I: 显示文件属性 (Win 上 Alt+鼠标双击 也很方便!)
 #IfWinActive, ahk_exe webstorm64.exe
-$#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebStorm 自己处理
+; #p::SendInput !{p}                     ; ⌘ P: 映射为 Alt+P 用于提示函数参数. 否则会和 "Up" 的 Ctrl+P 冲突.    ; 算了, 因为 Ctrl+N 是新建文档, 还要倒腾很多, 太麻烦.
+#IfWinActive, ahk_exe pycharm64.exe
+; #p::SendInput !{p}                     ; ⌘ P: 映射为 Alt+P 用于提示函数参数. 否则会和 "Up" 的 Ctrl+P 冲突.
+#IfWinActive, ahk_exe wps.exe
+#1::SendInput ^{r}
+#2::SendInput ^{F3}
+#3::SendInput !{r}
+#4::SendInput !{3}
+#Enter::SendInput +{F5}
 #IfWinActive
 ;===========================================;
 ;                 特判结束                  
@@ -42,8 +51,8 @@ $#BackSpace::SendInput ^{BackSpace}     ; ⌘ ⌫: 映射为 ⌃⌫ 交给 WebSt
 ;===========================================;
 #Left::SendInput {Home}                     ; ⌘ ←
 #Right::SendInput {End}                     ; ⌘ →
-!Up::SendInput {PgUp}                       ; ⌘ ↑
-!Down::SendInput {PgDn}                     ; ⌘ ↓
+#Up::SendInput {PgUp}                       ; ⌘ ↑
+#Down::SendInput {PgDn}                     ; ⌘ ↓
 !Left::SendInput ^{Left}                    ; ⌥ ←
 !Right::SendInput ^{Right}                  ; ⌥ →
 !+Left::SendInput ^+{Left}                  ; ⌥ ⇧ ←
@@ -172,12 +181,12 @@ LWin::return                                ; ⌘ (本来想模拟按住 Ctrl, �
 #,::SendInput ^,                            ; ⌘ ,: 设置
 #.::SendInput ^.                            ; ⌘ .:
 Lwin & Tab::AltTab                          ; ⌘ Tab: 切换窗口
-Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里实现得不好, 因为这个键还有同应用内切换的功能. 不过 win 上应该不能实现.)
+Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里实现得不好, 因为这个键还有同应用内切换的功能. 不过 win 上应该不能实现, AHK 对 AltTab 的支持似乎不好(参见手册))
 #=::SendInput ^{=}                          ; ⌘ =: 放大
 #+=::SendInput ^+{=}                        ; ⌘ +: 放大
+#WheelUp::SendInput ^{=}                    ; 滚轮向上: 放大
 #-::SendInput ^{-}                          ; ⌘ -: 缩小
 #+-::SendInput ^+{-}                        ; ⌘ _: 缩小
-#WheelUp::SendInput ^+{=}                   ; 滚轮向上: 放大
 #WheelDown::SendInput ^{-}                  ; 滚轮向下: 缩小
 #Enter::SendInput ^{Enter}                  ; ⌘ ⏎: 比如 Typora 的表格新行
 
@@ -278,13 +287,13 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 ; ⌘ ⌥ 其它   
 #!Enter::SendInput ^!{Enter}                                                    ; 配合 AquaSnap
 #!Left::SendInput {CtrlDown}{AltDown} {Left}{Left}{Left} {CtrlUp}{AltUp}        ; 实现类似 Magnet 的窗口管理.
-#!Right::SendInput {CtrlDown}{AltDown} {Right}{Right}{Right} {CtrlUp}{AltUp}    ; 这里多发送几次, 
+#!Right::SendInput {CtrlDown}{AltDown} {Right}{Right}{Right} {CtrlUp}{AltUp}    ; 这里多发送几次, ζ
 #!Up::SendInput {CtrlDown}{AltDown} {Up} {CtrlUp}{AltUp}                        ; 是因为 AquaSnap
 #!Down::SendInput {CtrlDown}{AltDown} {Down} {CtrlUp}{AltUp}                    ; 并不像 Magnet 那样一步到位..
 #![::^![                                                                        ; ⌘ ⌥ [
 #!]::^!]                                                                        ; ⌘ ⌥ ]
 $#!Space::SendInput #!{Space}                                                   ; ⌘ ⌥ Space: 打开 / 关闭 Everything.app  (这个快捷键直接在 Everything 里设置即可, 这里仅用于占位)
-
+#!Esc::Run taskmgr                                                              ; ⌘ ⌥ Esc: 强制退出程序 (打开任务管理器hhh)
 
 
 ;===========================================;
@@ -391,6 +400,7 @@ CapsLock & Tab::#Tab            ; 切换桌面
 ;===========================================;
 ;          基于 ⌥ [⇧] 的快捷输入
 ;===========================================;
+#UseHook On
 !a::SendInput α
 !b::SendInput β
 !c::SendInput χ
@@ -468,18 +478,31 @@ CapsLock & Tab::#Tab            ; 切换桌面
 !/::SendInput ÷
 ![::SendInput 【
 !]::SendInput 】
-
+#UseHook Off
 
 ;===========================================;
 ;                短语展开
 ;===========================================;
 ; 日期展开
+:*:=cd::
 ::\cd::
     FormatTime, TimeString, , yyyy-MM-dd
     SendInput, %TimeString%
     return
+
+:*:=ct::
 ::\ct::
     FormatTime, TimeString, , yyyy-MM-dd(HH.mm.ss)
     SendInput, %TimeString%
     return
 
+; Emoji
+:*:=check::
+::\check::
+    SendInput ✔️
+    return
+
+:*:=cross::
+::\cross::
+    SendInput ❌
+    return
