@@ -28,6 +28,8 @@ SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放�
 #+z::SendInput ^{y}                     ; ⌘ ⇧ Z: 重做 (ctrl + Y)
 #BackSpace::SendInput {Delete}          ; ⌘ ⌫: 删除
 #i::SendInput !{Enter}                  ; ⌘ I: 显示文件属性 (Win 上 Alt+鼠标双击 也很方便!)
+#[::SendInput !{Left}                   ; ⌘ [: 返回上一个文件夹
+#]::SendInput !{Right}                  ; ⌘ ]: 前进到下一文件夹
 #IfWinActive, ahk_exe webstorm64.exe
 ; #p::SendInput !{p}                     ; ⌘ P: 映射为 Alt+P 用于提示函数参数. 否则会和 "Up" 的 Ctrl+P 冲突.    ; 算了, 因为 Ctrl+N 是新建文档, 还要倒腾很多, 太麻烦.
 #IfWinActive, ahk_exe pycharm64.exe
@@ -187,7 +189,7 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 #WheelUp::SendInput ^{=}                    ; 滚轮向上: 放大
 #-::SendInput ^{-}                          ; ⌘ -: 缩小
 #+-::SendInput ^+{-}                        ; ⌘ _: 缩小
-#WheelDown::SendInput ^{-}                  ; 滚轮向下: 缩小
+#WheelDown::SendInput ^{-}                  ; 滚轮向下: 缩小        
 #Enter::SendInput ^{Enter}                  ; ⌘ ⏎: 比如 Typora 的表格新行
 
 
@@ -286,10 +288,10 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 
 ; ⌘ ⌥ 其它   
 #!Enter::SendInput ^!{Enter}                                                    ; 配合 AquaSnap
-#!Left::SendInput {CtrlDown}{AltDown} {Left}{Left}{Left} {CtrlUp}{AltUp}        ; 实现类似 Magnet 的窗口管理.
-#!Right::SendInput {CtrlDown}{AltDown} {Right}{Right}{Right} {CtrlUp}{AltUp}    ; 这里多发送几次, ζ
-#!Up::SendInput {CtrlDown}{AltDown} {Up} {CtrlUp}{AltUp}                        ; 是因为 AquaSnap
-#!Down::SendInput {CtrlDown}{AltDown} {Down} {CtrlUp}{AltUp}                    ; 并不像 Magnet 那样一步到位..
+#!Left::SendInput ^!{Left}^!{Left}^!{Left}                                      ;  实现类似 Magnet 的窗口管理.
+#!Right::SendInput ^!{Right}^!{Right}^!{Right}                                  ; 这里多发送几次, ζ
+#!Up::SendInput {CtrlDown}{AltDown} {Up} {CtrlUp}{AltUp}                        ;  是因为 AquaSnap
+#!Down::SendInput {CtrlDown}{AltDown} {Down} {CtrlUp}{AltUp}                    ;   并不像 Magnet 那样一步到位..
 #![::^![                                                                        ; ⌘ ⌥ [
 #!]::^!]                                                                        ; ⌘ ⌥ ]
 $#!Space::SendInput #!{Space}                                                   ; ⌘ ⌥ Space: 打开 / 关闭 Everything.app  (这个快捷键直接在 Everything 里设置即可, 这里仅用于占位)
