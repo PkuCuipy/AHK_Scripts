@@ -9,6 +9,12 @@
 ;   注: 需要在系统中禁用掉 Win 键的部分快捷键. (http://www.xitongzhijia.net/xtjc/20170112/90736.html)
 ;===========================================;
 
+; run script as admin (reload if not as admin) 
+if not A_IsAdmin  {    
+    Run *RunAs "%A_ScriptFullPath%"     
+    ExitApp
+}
+
 SetTitleMatchMode RegEx     ; 使用正则匹配模式  (这个似乎必须放在最顶上才生效, 没仔细研究原因)
 
 ;===========================================;
@@ -185,11 +191,11 @@ LWin::return                                ; ⌘ (本来想模拟按住 Ctrl, �
 Lwin & Tab::AltTab                          ; ⌘ Tab: 切换窗口
 Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里实现得不好, 因为这个键还有同应用内切换的功能. 不过 win 上应该不能实现, AHK 对 AltTab 的支持似乎不好(参见手册))
 #=::SendInput ^{=}                          ; ⌘ =: 放大
-#+=::SendInput ^+{=}                        ; ⌘ +: 放大
-#WheelUp::SendInput ^{=}                    ; 滚轮向上: 放大
 #-::SendInput ^{-}                          ; ⌘ -: 缩小
+#+=::SendInput ^+{=}                        ; ⌘ +: 放大
 #+-::SendInput ^+{-}                        ; ⌘ _: 缩小
-#WheelDown::SendInput ^{-}                  ; 滚轮向下: 缩小        
+#WheelUp::SendInput ^{=}                    ; 滚轮向上: 放大
+#WheelDown::SendInput ^{-}                  ; 滚轮向下: 缩小    
 #Enter::SendInput ^{Enter}                  ; ⌘ ⏎: 比如 Typora 的表格新行
 
 
