@@ -181,7 +181,7 @@ $#LButton::
 
 ; ⌘ 其它
 LWin::return                                ; ⌘ (本来想模拟按住 Ctrl, 但好像做不到...)
-RWin::SendInput {RWin}                      ; 保留右侧 ⌘ 的 Win 徽标键功能
+RWin::RWin                                  ; 保留右侧 ⌘ 的 Win 徽标键功能
 ; #IfWinActive, ahk_exe SearchHost 
 ; #Space::SendInput {Esc} 
 ; #IfWinActive
