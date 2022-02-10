@@ -181,10 +181,10 @@ $#LButton::
 
 ; ⌘ 其它
 LWin::return                                ; ⌘ (本来想模拟按住 Ctrl, 但好像做不到...)
-RWin::RWin                                  ; 保留右侧 ⌘ 的 Win 徽标键功能
-#IfWinActive, ahk_exe SearchHost 
-#Space::SendInput {Esc} 
-#IfWinActive
+RWin::SendInput {RWin}                      ; 保留右侧 ⌘ 的 Win 徽标键功能
+; #IfWinActive, ahk_exe SearchHost 
+; #Space::SendInput {Esc} 
+; #IfWinActive
 #Space::SendInput {LWin}                    ; ⌘ Space: 模拟 Spotlight 搜索
 #/::SendInput ^/                            ; ⌘ /: 注释
 #,::SendInput ^,                            ; ⌘ ,: 设置
@@ -195,7 +195,7 @@ Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里�
 #-::SendInput ^{-}                          ; ⌘ -: 缩小
 #+=::SendInput ^+{=}                        ; ⌘ +: 放大
 #+-::SendInput ^+{-}                        ; ⌘ _: 缩小
-#WheelUp::SendInput ^{=}                    ; 滚轮向上: 放大
+#WheelUp::SendInput ^{=}                    ; 滚轮向上: 放大 
 #WheelDown::SendInput ^{-}                  ; 滚轮向下: 缩小    
 #Enter::SendInput ^{Enter}                  ; ⌘ ⏎: 比如 Typora 的表格新行
 
@@ -515,3 +515,12 @@ CapsLock & Tab::#Tab            ; 切换桌面
 ::\cross::
     SendInput ❌
     return
+
+
+
+;===========================================;
+;            冷门按键作特殊用途
+;===========================================;
+F4::SendInput {RWin}        ; 打开 / 关闭搜索栏
+
+
