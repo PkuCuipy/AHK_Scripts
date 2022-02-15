@@ -191,6 +191,9 @@ RWin::RWin                                  ; 保留右侧 ⌘ 的 Win 徽标键
 #.::SendInput ^.                            ; ⌘ .:
 Lwin & Tab::AltTab                          ; ⌘ Tab: 切换窗口
 Lwin & `::ShiftAltTab                       ; ⌘ `: 向左切换窗口 (这里实现得不好, 因为这个键还有同应用内切换的功能. 不过 win 上应该不能实现, AHK 对 AltTab 的支持似乎不好(参见手册))
+#IfWinActive, ahk_class XamlExplorerHostIslandWindow
+LWin & q::SendInput {AltDown}{Delete}                
+#IfWinActive
 #=::SendInput ^{=}                          ; ⌘ =: 放大
 #-::SendInput ^{-}                          ; ⌘ -: 缩小
 #+=::SendInput ^+{=}                        ; ⌘ +: 放大
