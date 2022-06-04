@@ -1,4 +1,3 @@
-# AHK_Scripts
 AutoHotKey scripts for keyboard shortcuts mapping.
 
 > 2022-01-09
@@ -12,4 +11,4 @@ AutoHotKey scripts for keyboard shortcuts mapping.
 > 
 > 之前的键盘手感太差了, 换了个 Magic Keyboard. 当然我知道这玩意本来是给 Apple 设备用的.
 > 
-> 所以为 MK 重新写了个 Script, 也比之前的版本更整洁.
+> 所以为 Magic Keyboard 重新写了个 Script, 也比之前的版本更整洁.
