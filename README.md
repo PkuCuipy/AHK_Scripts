@@ -1,14 +1,12 @@
-AutoHotKey scripts for keyboard shortcuts mapping.
+### 关于
+`AutoHotKey` scripts for keyboard shortcuts mapping on Windows 11.
 
-> 2022-01-09
-> 
-> 组装了一台新 PC, 但不习惯 Windows 的快捷键, 因此使用 AHK 软件, 通过脚本实现快捷键重映射.
-> 
-> 比如在 Win 键盘上, Alt 位于 Command 的位置, 所以我会把比如 Alt+c 映射为 Ctrl+c, 从而实现类似 macOS 的复制手感.
-
-
-> 2022-01-14
-> 
-> 之前的键盘手感太差了, 换了个 Magic Keyboard. 当然我知道这玩意本来是给 Apple 设备用的.
-> 
-> 所以为 Magic Keyboard 重新写了个 Script, 也比之前的版本更整洁.
+### 碎念
+- 2022-01-09
+  - 组装了一台 PC, 但并不习惯 Win11 的快捷键,
+  - 于是使用 AHK 脚本实现快捷键重映射, 复刻 macOS 风格快捷键.
+  - 比如将 `Alt+c` 映射为 `Ctrl+c`.
+- 2022-01-14
+  - 之前的键盘手感不太好, 于是改入一块 Magic Keyboard.
+  - 键盘驱动使用的第三方的付费工具 `MagicUtilities`.
+  - 键位映射方面就用的 `AHK` 了. 所以重写了一个 Script, 也比之前的版本更整洁.
